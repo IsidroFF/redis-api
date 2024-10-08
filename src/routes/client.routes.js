@@ -3,8 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 // Controladores de las rutas
-const { saludoCliente } = require('../controllers/client.controller.js');
+const { saludoCliente, addUser } = require('../controllers/client.controller.js');
 
 router.get('/hi', saludoCliente);
+router.post('/add', addUser)
 
 module.exports = router
