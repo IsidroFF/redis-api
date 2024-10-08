@@ -12,7 +12,7 @@ const getProductInfo = async (req,res) => {
     const productInfo = await redisConnection.hGetAll(keyValue)
 
     res.status(200).json({
-        message: "Succesfull",
+        message: "Successfull",
         data: productInfo
     })
 }
@@ -39,7 +39,7 @@ const addProduct = async (req, res) => {
 
     // Enviamos la respueta del servidor
     res.status(200).json({
-        message: "Succesfull",
+        message: "Successfull",
         data:{
             keyValue,
             nombre,

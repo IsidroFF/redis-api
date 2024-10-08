@@ -50,7 +50,7 @@ Esta API permite gestionar productos, clientes, ventas y sucursales utilizando R
 - **Respuesta**:
     ```json
     {
-      "message": "Succesfull",
+      "message": "Successfull",
       "data": {
         "nombre": "Cemento",
         "precio": 200,
@@ -74,7 +74,7 @@ Esta API permite gestionar productos, clientes, ventas y sucursales utilizando R
 - **Respuesta**:
     ```json
     {
-      "message": "Succesfull",
+      "message": "Successfull",
       "data": {
         "keyValue": "producto:1001:sucursal:1111",
         "nombre": "Cemento",
