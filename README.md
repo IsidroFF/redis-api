@@ -18,6 +18,8 @@ Esta API permite gestionar productos, clientes, ventas y sucursales utilizando R
     - [Añadir sucursal](#post-branchadd)
     - [Buscar sucursales cercanas](#post-branchfind)
     - [Obtener miembros de una sucursal](#get-branchmemberssucursalid)
+- [Cómo Ejecutar la API](#cómo-ejecutar-la-api)
+  - [Ejecutar desde Docker](#ejecutar-desde-docker)
 
 ## Endpoints
 
@@ -256,4 +258,36 @@ Esta API permite gestionar productos, clientes, ventas y sucursales utilizando R
     npm start
     ```
 
-3. La API estará disponible en `http://localhost:3000/`
+### Ejecutar desde Docker
+
+Para ejecutar la API desde un contenedor Docker, puedes utilizar el siguiente archivo Dockerfile:
+
+```dockerfile
+FROM node
+
+WORKDIR /.
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+#### Instrucciones:
+
+1. **Construir la imagen Docker**:
+    ```bash
+    docker build -t redis-api .
+    ```
+
+2. **Ejecutar el contenedor Docker**:
+    ```bash
+    docker run -p 3000:3000 redis-api
+    ```
+
+3. La API estará disponible en `http://localhost:3000/`.
