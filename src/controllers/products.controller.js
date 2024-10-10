@@ -1,53 +1,70 @@
-const redisConnection = require('../database/database.js')
+const redisConnection = require('../database/database.js');
 
 const saludoProductos = (req, res) => {
     res.status(200).json({
         products: 'Si jala producto'
-    })
+    });
 }
 
-const getProductInfo = async (req,res) => {
-    const { keyValue } = req.params
+const getProductInfo = async (req, res) => {
+    try {
+        const { keyValue } = req.params;
 
-    const productInfo = await redisConnection.hGetAll(keyValue)
+        // Obtener información del producto desde Redis
+        const productInfo = await redisConnection.hGetAll(keyValue);
 
-    res.status(200).json({
-        message: "Successfull",
-        data: productInfo
-    })
+        // Respuesta exitosa
+        res.status(200).json({
+            message: "Successfull",
+            data: productInfo
+        });
+    } catch (error) {
+        // Manejo de errores
+        res.status(500).json({
+            message: "Error al obtener la información del producto",
+            error
+        });
+    }
 }
 
 const addProduct = async (req, res) => {
-    // Desestrcutrar la info del body
-    const {
-        productId,
-        sucursalId,
-        nombre,
-        precio,
-        categoria
-    } = req.body
-
-    // Generar la key de busqueda
-    const keyValue = `producto:${productId}:sucursal:${sucursalId}`
-
-    // Guardar la informacion en redis
-    await redisConnection.hSet(keyValue, {
-        nombre,
-        precio, 
-        categoria
-    })
-
-    // Enviamos la respueta del servidor
-    res.status(200).json({
-        message: "Successfull",
-        data:{
-            keyValue,
+    try {
+        // Desestructurar la información del cuerpo de la petición
+        const {
+            productId,
+            sucursalId,
             nombre,
             precio,
             categoria
-        }
-    })
+        } = req.body;
 
+        // Generar la clave de búsqueda
+        const keyValue = `producto:${productId}:sucursal:${sucursalId}`;
+
+        // Guardar la información del producto en Redis
+        await redisConnection.hSet(keyValue, {
+            nombre,
+            precio,
+            categoria
+        });
+
+        // Respuesta exitosa
+        res.status(200).json({
+            message: "Successfull",
+            data: {
+                keyValue,
+                nombre,
+                precio,
+                categoria
+            }
+        });
+    } catch (error) {
+        // Manejo de errores
+        res.status(500).json({
+            message: "Error al agregar el producto",
+            error
+        });
+    }
 }
 
 module.exports = {
