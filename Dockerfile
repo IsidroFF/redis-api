@@ -1,13 +1,15 @@
-   FROM node
+FROM node
    
-   WORKDIR /.
+WORKDIR /.
+ 
+COPY package*.json ./
+  
+RUN npm install
    
-   COPY package*.json ./
+COPY . .
+
+ENV REDIS_URL=redis://localhost:6379
    
-   RUN npm install
-   
-   COPY . .
-   
-   EXPOSE 3000
-   
-   CMD ["npm", "start"]
+EXPOSE 3000
+ 
+CMD ["npm", "start"]

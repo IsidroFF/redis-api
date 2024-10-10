@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  redis_stack:
+    image: redis/redis-stack
+    container_name: redis_stack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+
+  backend_app:
+    image: isidroitt/node_redis_api:latest
+    container_name: "node_app"
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_URL: redis://redis_stack:6379
+    depends_on:
+      - redis_stack
